@@ -4,32 +4,55 @@ Use a Raspberry-Pi as a RestAPI-Webserver to retrieve data from its connected se
 ## Models
 All Models are represented as JSON.
 
+### controller Model
+
+```json
+{
+  "id": "int -> representing the unique Id of a Device",
+  "controller_name": "string -> default vlaue is Restp+id",
+  "Sensors" : "List of Sensors"
+}
+```
+
 ### Sensor Model
 
 ```JSON
 {
   "id": "int -> representing the unique Id of a sensor",
-  "type": "string -> representing the device type (Temprature, Lux, Huminidty, ...)",
-  "loc": "string -> location of the Device",
+  "internal_id": "string -> id give by the manufacturer",
+  "name": "meaningful name for the Sensor",
+  "type": "string -> representing the device type (e.g.TemperatureSensor)",
+  "description": "string -> optional",
   "data": {
-      "value_": "Sensor specific data e.g. temprature" 
+      "value": "Sensor specific data e.g. temprature" 
       }
 }
 ```
 
-### Device Model
+## Usage of the API
+
+### Get Controller Status
+
+`GET {controller-ip}:{port}/api/Status`
 
 
-## Get all connected Sensors
-Retrieve a list of all connected Sensors.
+Reponses:
+* `200 OK` -> returns a Device Model in Json
+* `404 NOT FOUND -> Device is not reachable`
+
+
+#### Retrieve a List of connected Sensors
  
-Method:`GET`
-
-Route: http://{device-ip}:{port}/sensors
+`GET {controller-ip}:{port}/api/sensors`
 
 Responses:
-+ `200 Success` -> On Succees
++ `200 OK` -> returns al List of Sensors.
 + `404 Not Found` -> If device is not found
 
-## Get Sensor by id
+### Retrieve Sensordata by id
 
+`GET http://{device-ip}:{port:int}/sensors/{id:int}`
+
+Responses:
++ `200 OK` -> On Succees
++ `404 Not Found` -> If Sensor is not found
