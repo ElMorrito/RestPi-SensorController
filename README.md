@@ -38,7 +38,7 @@ All Models are represented as JSON.
 
 Reponses:
 * `200 OK` -> returns a Device Model in Json
-* `404 NOT FOUND -> Device is not reachable`
+* `404 NOT FOUND` -> Device is not reachable
 
 
 #### Retrieve a List of connected Sensors
