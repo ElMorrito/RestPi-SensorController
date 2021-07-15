@@ -4,7 +4,7 @@ Use a Raspberry-Pi as a RestAPI-Webserver to retrieve data from its connected se
 ## Models
 All Models are represented as JSON.
 
-### controller Model
+### Controller Model
 
 ```json
 {
