@@ -15,20 +15,17 @@ hostname = socket.gethostname()
 local_ip_address = socket.gethostbyname(hostname)
 
 
-@app.route('/api/settings', methods=['GET', 'PATCH'])
+@app.route('/api/info', methods=['GET'])
 def device_settings():
-    if request.method == 'PATCH':
-        return "not implemented"
-    else:
-        return {
-            'id': 1,
-            'host_name': hostname,
-            'ip_address': local_ip_address,
-            'logging': False,
-            'status': 'ok',
-            'location': 'Main Store'
-        }
+    return {
+        'id': 1,
+        'host_name': hostname,
+        'ip_address': local_ip_address,
+        'logging': False,
+        'status': 'ok',
+        'location': 'Main Store'
+    }
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
