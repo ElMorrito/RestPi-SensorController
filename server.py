@@ -17,13 +17,14 @@ print(platform)
 hostname = socket.gethostname()
 
 if platform == "linux" or platform == "linux2":
-    local_ip_address = check_output(["hostname", "-I"])
+    local_ip_address = check_output(
+        ['hostname', '-s', '-I']).decode('utf-8')[:-1]
 else:
     local_ip_address = socket.gethostbyname(hostname)
 
 
 print(hostname)
-print('IP on platform "{}" is : {}'.format(platform, local_ip_address))
+print(local_ip_address)
 
 
 @app.route('/api/info', methods=['GET'])
