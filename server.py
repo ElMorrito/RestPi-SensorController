@@ -1,6 +1,8 @@
 from flask import Flask, request
 import socket
-import subprocess
+from sys import platform
+from subprocess import call
+
 
 app = Flask("__name__")
 
@@ -10,15 +12,18 @@ def index():
     return "Hello User"
 
 
+print(platform)
 # Get Hostname and Ip Address
 hostname = socket.gethostname()
-try:
-    local_ip_address = subprocess.call('hostname', '-I')[0]
 
-except:
+if platform == "linux" or platform == "linux2":
+    local_ip_address = call("hostname", "-I")
+else:
     local_ip_address = socket.gethostbyname(hostname)
 
-print(local_ip_address)
+
+print(hostname)
+print('IP on platform "{}" is : {}'.format(platform, local_ip_address))
 
 
 @app.route('/api/info', methods=['GET'])
