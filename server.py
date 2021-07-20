@@ -1,7 +1,7 @@
 from flask import Flask, request
 import socket
 from sys import platform
-from subprocess import call
+from subprocess import check_output
 
 
 app = Flask("__name__")
@@ -17,7 +17,7 @@ print(platform)
 hostname = socket.gethostname()
 
 if platform == "linux" or platform == "linux2":
-    local_ip_address = call("hostname", "-I")
+    local_ip_address = check_output("hostname", "-I")
 else:
     local_ip_address = socket.gethostbyname(hostname)
 
