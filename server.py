@@ -17,7 +17,7 @@ print(platform)
 hostname = socket.gethostname()
 
 if platform == "linux" or platform == "linux2":
-    local_ip_address = check_output("hostname", "-I")
+    local_ip_address = check_output(["hostname", "-I"])
 else:
     local_ip_address = socket.gethostbyname(hostname)
 
