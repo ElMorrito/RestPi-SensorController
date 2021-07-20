@@ -1,6 +1,6 @@
 from flask import Flask, request
 import socket
-
+import subprocess
 
 app = Flask("__name__")
 
@@ -12,7 +12,13 @@ def index():
 
 # Get Hostname and Ip Address
 hostname = socket.gethostname()
-local_ip_address = socket.gethostbyname(hostname)
+try:
+    local_ip_address = subprocess.call('hostname', '-I')[0]
+
+except:
+    local_ip_address = socket.gethostbyname(hostname)
+
+print(local_ip_address)
 
 
 @app.route('/api/info', methods=['GET'])
@@ -21,7 +27,6 @@ def device_settings():
         'id': 1,
         'host_name': hostname,
         'ip_address': local_ip_address,
-        'logging': False,
         'status': 'ok',
         'location': 'Main Store'
     }
