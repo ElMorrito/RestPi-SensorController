@@ -32,7 +32,7 @@ def device_settings():
     return {
         'id': 1,
         'host_name': hostname,
-        'ip_address': local_ip_address,
+        'ipv4_address': local_ip_address.split(" ")[0],
         'status': 'ok',
         'location': 'Main Store'
     }
