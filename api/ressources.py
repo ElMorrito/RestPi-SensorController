@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import json, request
 from flask.json import jsonify
-import socket
+from socket import gethostbyname, gethostname
 from sys import platform
 from subprocess import check_output
 import markdown
@@ -9,14 +9,14 @@ import os
 
 api_blueprint = Blueprint(name='api', import_name=__name__, url_prefix='/api')
 
-hostname = socket.gethostname()
+hostname = gethostname()
 
 if platform == "linux" or platform == "linux2":
     output = check_output(
         ['hostname', '-s', '-I']).decode('utf-8')[:-1]
     local_ip_address = output.split(" ")[0]
 else:
-    local_ip_address = socket.gethostbyname(hostname)
+    local_ip_address = gethostbyname(hostname)
 
 
 @api_blueprint.route("/")

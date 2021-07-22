@@ -23,7 +23,7 @@ ssh pi@raspberrypi.local
 
 Responses:
 
-* `200 OK` -> returns a Device Model in Json
+* `200 OK` -> Returns device settings in Json
 * `404 NOT FOUND` -> Device is not reachable
 
 Example:
@@ -43,7 +43,7 @@ Example:
 `PATCH /api/status`
 Responses:
 
-* `204 UPDATED` -> returns nothing just the response Code
+* `204 UPDATED` -> Returns nothing but the response Code
 * `404 NOT FOUND` -> Device is not reachable
 
 ### Retrieve Sensor data
@@ -77,7 +77,7 @@ Responses:
 
 Responses:
 
-* `200 OK` -> returns al List of Sensors.
+* `200 OK` -> Returns a list of Sensors.
 * `404 Not Found` -> If device is not found.
 
 Example:
