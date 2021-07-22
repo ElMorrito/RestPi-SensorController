@@ -2,16 +2,31 @@
 
 Use a Raspberry-Pi as a RestAPI-Webserver to retrieve data from its connected sensors.
 
+## Before first use
+
+
+1. Install image on SD-Card.
+2. Power up the device and Connect rpi and establish a Ethernet connection inside the network.
+3. SSH via Terminal or Power shell and enter password
+
+```shell
+ssh pi@raspberrypi.local
+ ```
+
+4.Setup a static IP address.
+
 ## Usage of the API
 
-### Get Controller Status
+### Get device status
 
-`GET {controller-ip}:{port}/api/Status`
+`GET /api/status`
 
-Reponses:
+Responses:
 
 * `200 OK` -> returns a Device Model in Json
 * `404 NOT FOUND` -> Device is not reachable
+
+Example:
 
 ```json
 {
@@ -23,40 +38,19 @@ Reponses:
 }
 ```
 
-#### Retrieve a List of connected Sensors
+## Modify Device Info
 
-`GET {controller-ip}:{port}/api/sensors`
-
+`PATCH /api/status`
 Responses:
 
-* `200 OK` -> returns al List of Sensors.
-* `404 Not Found` -> If device is not found.
+* `204 UPDATED` -> returns nothing just the response Code
+* `404 NOT FOUND` -> Device is not reachable
+
+### Retrieve Sensor data
+
+`GET /api/sensors/{id:int}`
 
 Example:
-```JSON
-[
-  {
-    
-      "id": "int -> representing the unique Id of a sensor",
-      "internal_id": "string -> id give by the manufacturer",
-      "name": "strin -> meaningful name for the Sensor",
-      "type": "string -> representing the device type",
-      "description": "string -> optional",
-      "data": {
-          "value": "Sensor specific data e.g. temprature",
-          "unit": "Unit of the value e.g. Degrees C"
-          }
-}
-
-  },
-  {
-
-  }
-]
-```
-### Retrieve Sensordata by id
-
-`GET http://{device-ip}:{port:int}/sensors/{id:int}`
 
 ```JSON
 {
@@ -76,3 +70,39 @@ Responses:
 
 * `200 OK` -> On Succees
 * `404 Not Found` -> If Sensor is not found
+
+#### Retrieve a list of connected Sensors
+
+`GET /api/sensors`
+
+Responses:
+
+* `200 OK` -> returns al List of Sensors.
+* `404 Not Found` -> If device is not found.
+
+Example:
+
+```JSON
+[
+  {
+    "internal_id": "azd345fff",
+    "name": "AZd8222",
+    "type": "temp",
+    "description": "Sensor 1",
+    "data": {
+        "value": "21.0",
+        "unit": "°C"
+        }
+  },
+  {   
+    "internal_id": "azd345sdir",
+    "name": "AZd8222",
+    "type": "temp",
+    "description": "Sensor 2",
+    "data": {
+        "value": "21.1",
+        "unit": "°C"
+        }
+  }
+]
+```
