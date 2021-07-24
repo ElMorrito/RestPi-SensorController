@@ -3,13 +3,14 @@ import os
 from flask import Flask
 import markdown
 
-from api.ressources import api_blueprint
+from api.main import api_blueprint
 from app.views import app_blueprint
 
 app = Flask("__name__")
 
 app.register_blueprint(app_blueprint)
 app.register_blueprint(api_blueprint)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
