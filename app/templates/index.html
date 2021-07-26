@@ -1,14 +1,12 @@
-<!doctype html>
-<html>
+{% extends 'base.html'%}
 
-<head>
-    <Title>
-        RestPi | Home
-    </Title>
-</head>
+{% block content%}
 
-<body>
-    <h1>Welcome to the main page!</h1>
-</body>
+<h1>Available sensors</h1>
 
-</html>
+{% for sensor in sensors%}
+
+<h2>name is {{sensor['name']}}</h2>
+
+{%endfor%}
+{%endblock%}
