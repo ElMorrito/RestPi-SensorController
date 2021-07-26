@@ -1,12 +1,20 @@
-{% extends 'base.html'%}
+<!doctype html>
+<html lang="en">
 
-{% block content%}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RestPi | Home</title>
+</head>
 
-<h1>Available sensors</h1>
+<body>
 
-{% for sensor in sensors%}
+    <br />
+    <div class="container">
+        <H1>This is the main Page of the Server</H1>
 
-<h2>name is {{sensor['name']}}</h2>
+    </div>
+</body>
 
-{%endfor%}
-{%endblock%}
+</html>
