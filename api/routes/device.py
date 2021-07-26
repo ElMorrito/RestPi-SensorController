@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import json, request
 from flask.json import jsonify
-from service.network_service import hostname, get_local_ip_address
+from service.network_service import get_local_ip_address, hostname
 
 api_device_bp = Blueprint(
     name="device_api", import_name=__name__, url_prefix='/device')
@@ -17,6 +17,7 @@ def device_settings():
             "Station": "DUS",
             "ipv4_address": get_local_ip_address(),
             "hostname": hostname,
-        }
+        }, 200
+
     else:
         pass

@@ -4,8 +4,8 @@ import markdown
 import os
 
 
-from api.views.device import api_device_bp
-from api.views.sensors import api_sensor_bp
+from api.routes.device import api_device_bp
+from api.routes.sensors import api_sensor_bp
 
 api_blueprint = Blueprint(name='api', import_name=__name__, url_prefix='/api')
 api_blueprint.register_blueprint(api_device_bp)
