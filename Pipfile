@@ -7,6 +7,8 @@ name = "pypi"
 flask = "*"
 pylint = "*"
 markdown = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 [dev-packages]
 autopep8 = "*"

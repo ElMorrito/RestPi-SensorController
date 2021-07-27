@@ -1,21 +1,15 @@
-import api
-import os
-from flask import Flask
-import markdown
+from app import create_app
 
-from api.main import api_blueprint
-from app.views import app_blueprint
-
-app = Flask("__name__")
-
-app.register_blueprint(app_blueprint)
-app.register_blueprint(api_blueprint)
+app = create_app()
 
 
 if __name__ == "__main__":
     app.run(debug=True)
 
 
+def init_database():
+    from app.extensions import db
+    db.create_all(app=app)
 # Get Hostname and Ip Address.
 # gethostbyname funtion does only return 127.0.1.1 if platfrom is linux,
 # so check for platfrom first.
