@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 import os
 
-from service.network_service import hostname, get_local_ip_address
+from app.api.controller.network_service import hostname, get_local_ip_address
 
 app_template_folder = os.path.join(os.path.dirname(__file__) + '/templates')
 
