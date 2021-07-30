@@ -1,21 +1,22 @@
-from os import name
-from flask import Flask
+
 import click
-import flask
+from flask import Flask
 from flask.cli import with_appcontext
+from flask_admin.contrib.sqla import ModelView
+from flask_sqlalchemy import model
+from flask_sqlalchemy.model import Model
+
 from app import models
-from app.extensions import db, ma, admin, security
+from app.admin import admin
+from app.admin.models import UserModelView
+from app.extensions import db, ma, security
 from app.views import app_blueprint
 from app.api import api_blueprint
 
-from flask_admin.contrib.sqla import ModelView
+
 from flask_security import SQLAlchemyUserDatastore
 
 user_datastore = SQLAlchemyUserDatastore(db, models.Users, models.Roles)
-
-
-class UserModelView(ModelView):
-    column_exclude_list = ['password', ]
 
 
 @click.command(name='create-db')
@@ -33,6 +34,15 @@ def create_user(mail, password):
     db.session.commit()
 
 
+# Register Models for Admin views
+admin_views = [
+    UserModelView(models.Users, db.session),
+    ModelView(models.Roles, db.session),
+    ModelView(models.Sensor, db.session)
+]
+admin.add_views(*admin_views)
+
+
 def create_app():
 
     app = Flask(__name__)
@@ -46,10 +56,6 @@ def create_app():
     ma.init_app(app)
 
     admin.init_app(app)
-
-    admin.add_view(ModelView(models.Sensor, db.session))
-    admin.add_view(UserModelView(models.Users, db.session))
-    admin.add_view(ModelView(models.Roles, db.session))
 
     app.register_blueprint(app_blueprint)
     app.register_blueprint(api_blueprint)
