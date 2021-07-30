@@ -9,6 +9,9 @@ pylint = "*"
 markdown = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
+flask-admin = "*"
+flask-security = "*"
+email-validator = "*"
 
 [dev-packages]
 autopep8 = "*"

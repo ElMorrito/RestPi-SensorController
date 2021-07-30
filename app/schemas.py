@@ -1,7 +1,7 @@
 from app.extensions import ma
-from app.models import SensorCategory
+from app.models import Sensor
 
 
-class SensorCategorySchema(ma.SQLAlchemyAutoSchema):
+class SensorSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = SensorCategory
+        model = Sensor

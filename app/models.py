@@ -1,5 +1,6 @@
 from app.extensions import db
 from datetime import datetime
+from flask_security import RoleMixin, UserMixin
 
 
 class BaseModel(db.Model):
@@ -12,26 +13,35 @@ class BaseModel(db.Model):
 
 
 class Sensor(BaseModel):
-
-    model_name = db.Column(db.String(255), default="")
-    manufacturer_id = db.Column(db.String(255), default="")
-    description = db.Column(db.String(255), default="")
-
-    category_id = db.Column(db.Integer, db.ForeignKey('sensor_category.id'),
-                            nullable=False)
-    sensor_category = db.relationship('SensorCategory',
-                                      backref=db.backref('Sensors', lazy=True))
+    name = db.Column(db.String(255), default="", unique=True)
+    sensor_id = db.Column(db.String(255), default="",
+                          nullable=False, unique=True)
+    sensor_category = db.Column(db.String(255), default="Not specified")
 
     def __repr__(self):
-
-        if self.model_name != "":
-            return "{}".format(self.model_name)
-        else:
-            return " Sensor {}".format(self.id)
+        return "{}".format(self.sensor_id)
 
 
-class SensorCategory(BaseModel):
-    name = db.Column(db.String(255), default="None", nullable=False)
+roles_users_table = db.Table('roles_users',
+                             db.Column('users_id', db.Integer(),
+                                       db.ForeignKey('users.id')),
+                             db.Column('roles_id', db.Integer(),
+                                       db.ForeignKey('roles.id')))
+
+
+class Users(db.Model, UserMixin):
+    id = db.Column(db.Integer(), primary_key=True)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    active = db.Column(db.Boolean())
+    roles = db.relationship('Roles', secondary=roles_users_table,
+                            backref='user', lazy=True)
+
+
+class Roles(db.Model, RoleMixin):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
 
     def __repr__(self):
-        return "{}".format(self.name)
+        return '{}'.format(self.name)
