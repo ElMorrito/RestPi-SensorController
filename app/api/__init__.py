@@ -8,6 +8,7 @@ from app.api.routes.device import api_device_bp
 from app.api.routes.sensors import api_sensor_bp
 
 api_blueprint = Blueprint(name='api', import_name=__name__, url_prefix='/api')
+
 api_blueprint.register_blueprint(api_device_bp)
 api_blueprint.register_blueprint(api_sensor_bp)
 

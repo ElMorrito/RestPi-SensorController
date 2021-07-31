@@ -2,14 +2,11 @@
 import click
 from flask import Flask
 from flask.cli import with_appcontext
-from flask_admin.contrib.sqla import ModelView
-from flask_sqlalchemy import model
-from flask_sqlalchemy.model import Model
 
-from app import models
+from app.database import models
 from app.admin import admin
-from app.admin.models import UserModelView
-from app.extensions import db, ma, security
+from app.database import db
+from app.extensions import ma, security
 from app.views import app_blueprint
 from app.api import api_blueprint
 
@@ -32,15 +29,6 @@ def create_db():
 def create_user(mail, password):
     user_datastore.create_user(email=mail, password=password)
     db.session.commit()
-
-
-# Register Models for Admin views
-admin_views = [
-    UserModelView(models.Users, db.session),
-    ModelView(models.Roles, db.session),
-    ModelView(models.Sensor, db.session)
-]
-admin.add_views(*admin_views)
 
 
 def create_app():

@@ -1,11 +1,11 @@
-from app.extensions import db
+from app.database import db
 from datetime import datetime
 from flask_security import RoleMixin, UserMixin
 
 
 class BaseModel(db.Model):
     __abstract__ = True
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     date_created = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     date_modified = db.Column(
@@ -29,8 +29,7 @@ roles_users_table = db.Table('roles_users',
                                        db.ForeignKey('roles.id')))
 
 
-class Users(db.Model, UserMixin):
-    id = db.Column(db.Integer(), primary_key=True)
+class Users(BaseModel, UserMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean())
@@ -38,8 +37,7 @@ class Users(db.Model, UserMixin):
                             backref='user', lazy=True)
 
 
-class Roles(db.Model, RoleMixin):
-    id = db.Column(db.Integer(), primary_key=True)
+class Roles(BaseModel, RoleMixin):
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
