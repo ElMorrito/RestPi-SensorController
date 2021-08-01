@@ -132,4 +132,5 @@ dmypy.json
 .vscode
 
 #ignore sqllite databases
-.db
+*.db
+*.sqlite3
