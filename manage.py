@@ -1,11 +1,11 @@
-import click
-from flask import Flask
-from flask.cli import with_appcontext
 
-from database import models
+from flask import Flask, request, jsonify
+
+
 from apps.admin import admin
 from database import database
-from apps.extensions import ma, security
+from apps.security import security
+from apps.extensions import ma
 from apps.app.views import app_blueprint
 from apps.api.views import api_bp
 
@@ -15,7 +15,7 @@ from flask_security import SQLAlchemyUserDatastore
 
 def create_app():
 
-    app = Flask(__name__)
+    app = Flask('RestPi')
 
     app.config.from_object('config.DevelopmentConfig')
     # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///atest.db'
@@ -42,10 +42,14 @@ def create_app():
 
 app = create_app()
 
-
-user_datastore = SQLAlchemyUserDatastore(
-    database.db, models.Users, models.Roles)
-
+# define 404 and 405 error handlers for /api specific routes wich shuold only retrun json
+@app.errorhandler(404)
+@app.errorhandler(405)
+def _handle_api_error(ex):
+    if request.path.startswith('/api/'):
+        return jsonify(message=str(ex)), ex.code
+    else:
+        return ex
 
 # @click.command(name='create-db')
 # @with_appcontext

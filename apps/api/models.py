@@ -1,11 +1,6 @@
 from apps.extensions import ma
 
-from database.models import Sensor
-from flask_marshmallow import Marshmallow
-from flask_security import Security
-
-
-#ma = Marshmallow()
+from apps.app.models import Sensor
 
 
 class SensorSchema(ma.SQLAlchemyAutoSchema):
