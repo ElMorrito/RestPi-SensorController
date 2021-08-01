@@ -1,4 +1,4 @@
-from app.database import db
+from database.database import db
 from datetime import datetime
 from flask_security import RoleMixin, UserMixin
 

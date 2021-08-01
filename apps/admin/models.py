@@ -4,7 +4,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_security import current_user
 from wtforms.fields.core import SelectField
 
-from app.extensions import security
+from apps.extensions import security
 from werkzeug.utils import redirect
 
 
