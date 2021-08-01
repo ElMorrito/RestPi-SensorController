@@ -17,13 +17,21 @@ ssh pi@raspberrypi.local
 
 ## Usage of the API
 
+All Errors will have the form:
+
+```json
+{
+    "message" : " ' Short error descritpion ': 'A detailed message about the error and possible causes.'"
+}
+```
+
 ### Get device status
 
-`GET /api/status`
+`GET /api/device`
 
 Responses:
 
-* `200 OK` -> Returns device settings in Json
+* `200 OK` -> Returns basic device in Json
 * `404 NOT FOUND` -> Device is not reachable
 
 Example:
@@ -40,11 +48,21 @@ Example:
 
 ## Modify Device Info
 
-`PATCH /api/status`
+`PATCH /api/device`
+
+Allowed values:
+
+* `string`: station
+* `string`: location
+* `string`: name
+
+
 Responses:
 
-* `204 UPDATED` -> Returns nothing but the response Code
-* `404 NOT FOUND` -> Device is not reachable
+* `201 UPDATED` -> Returns nothing but the response Code
+* `400 NOT FOUND` -> Device is not reachable
+
+
 
 ### Retrieve Sensor data
 
