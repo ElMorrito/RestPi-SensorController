@@ -46,7 +46,7 @@ Example:
 }
 ```
 
-## Modify Device Info
+### Modify Device Info
 
 `PATCH /api/device`
 
