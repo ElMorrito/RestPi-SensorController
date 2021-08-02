@@ -21,7 +21,7 @@ All Errors will have the form:
 
 ```json
 {
-    "message" : " ' Short error descritpion ': 'A detailed message about the error and possible causes.'"
+    "message" : " ' Short error description ': 'A detailed message about the error and possible causes.'"
 }
 ```
 
