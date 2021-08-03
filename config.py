@@ -1,5 +1,7 @@
 import os
 
+from flask.app import Flask
+
 
 class Config(object):
     DEBUG = False
@@ -11,6 +13,11 @@ class Config(object):
     SECRET_KEY = '57e19ea558d4967a552d03deece34a70'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # flask_security config
+    SECURITY_REGISTERABLE = True
+
+    SECURITY_PASSWORD_SALT = 'saltyasfuck'
 
 
 class ProductionConfig(Config):
@@ -27,3 +34,5 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
     SQLALCHEMY_DATABASE_URI = "sqlite:///development_database.db"
+
+    SECURITY_SEND_REGISTER_EMAIL = False

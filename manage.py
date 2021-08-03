@@ -1,7 +1,7 @@
 
 from flask import Flask, request, jsonify
-
-
+from flask_security import datastore
+from flask_security.datastore import SQLAlchemyUserDatastore
 from apps.admin import admin
 from database import database
 from apps.security import security
@@ -9,19 +9,18 @@ from apps.extensions import ma
 from apps.app.views import app_blueprint
 from apps.api.views import api_bp
 
+from apps.security.models import Users, Roles
 
-from flask_security import SQLAlchemyUserDatastore
+
+user_datastore = SQLAlchemyUserDatastore(
+    database.db, Users, Roles)
 
 
 def create_app():
 
-    app = Flask('RestPi')
+    app = Flask(__name__)
 
     app.config.from_object('config.DevelopmentConfig')
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///atest.db'
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    # app.config['SECRET_KEY'] = "Thisissecret"
-    # # app.config['FLASK_ADMIN_SWATCH'] = 'Cerulean'
 
     database.init_app(app)
 
@@ -32,7 +31,7 @@ def create_app():
     app.register_blueprint(app_blueprint)
     app.register_blueprint(api_bp)
 
-    security.init_app(app)
+    security.init_app(app, datastore=user_datastore)
 
     # app.cli.add_command(create_db)
     # app.cli.add_command(create_user)
@@ -42,7 +41,10 @@ def create_app():
 
 app = create_app()
 
+
 # define 404 and 405 error handlers for /api specific routes wich shuold only retrun json
+
+
 @app.errorhandler(404)
 @app.errorhandler(405)
 def _handle_api_error(ex):

@@ -7,7 +7,8 @@ from apps.app.models import Sensor
 from apps.admin.models import UserModelView
 from database.database import db
 
-admin_bp = Blueprint('admin', __name__, template_folder='templates/admin')
+# admin_bp = Blueprint(
+#     'admin', __name__, template_folder='templates/admin')
 # Register your models for the admin view here
 
 admin_views = [
