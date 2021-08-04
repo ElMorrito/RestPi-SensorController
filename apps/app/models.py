@@ -1,6 +1,5 @@
 from database.database import db
 from database.models import BaseModel
-from flask_security import RoleMixin, UserMixin
 
 
 # class BaseModel(db.Model):

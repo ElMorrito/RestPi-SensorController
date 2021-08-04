@@ -6,7 +6,7 @@ from flask import jsonify, Blueprint, request, abort
 from apps.app.models import Sensor
 from apps.api.models import SensorSchema
 
-from apps.utils import get_local_ip_address, hostname
+from apps.utils import get_local_ip_address, get_temperature_data, hostname
 
 api_bp = Blueprint(name='apiV1', import_name=__name__, url_prefix='/api')
 
@@ -47,7 +47,7 @@ def device_info():
         for key in keys:
             if not key in ['name', 'location', 'station']:
                 abort(400,
-                      'Key <{}> is not a valid atrribute. Make sure only valid keys are used and no spelling mistakes are present'.format(str(key)))
+                      f'Key <{key}> is not a valid atrribute. Make sure only valid keys are used and no spelling mistakes are present')
 
         device_json[key] = request.get_json()[key]
 
@@ -64,12 +64,9 @@ def sensor_list():
 
     sensors_json = SensorSchema().dump(sensors, many=True)
 
+    # add data to the sensors
     for s in sensors_json:
-        dummy_temp = random.randrange(17, 24)
-        s['data'] = {
-            'value': dummy_temp,
-            'unit': '°C'
-        }
+        s['data'] = get_temperature_data()
         s['status_code'] = 'OK'
 
     return jsonify(sensors_json), 200
