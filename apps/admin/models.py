@@ -3,7 +3,7 @@ from flask_security import current_user
 from flask import redirect, url_for
 
 
-class SecuredModelView(ModelView):
+class SecureModelView(ModelView):
 
     """Base Class for protected views.
 
@@ -20,7 +20,7 @@ class SecuredModelView(ModelView):
             return redirect(url_for('security.login'))
 
 
-class UserModelView(ModelView):
+class UserModelView(SecureModelView):
 
     column_editable_list = ('active',)
     column_exclude_list = ['password', "date_modified"]

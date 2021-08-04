@@ -1,19 +1,12 @@
 
 from flask import Flask, request, jsonify
-from flask_security import datastore
-from flask_security.datastore import SQLAlchemyUserDatastore
-from apps.admin import admin
+
 from database import database
-from apps.security import security
-from apps.extensions import ma
+from apps.admin import admin
+from apps.auth import auth
+from apps.extensions import ma, security
 from apps.app.views import app_blueprint
 from apps.api.views import api_bp
-
-from apps.security.models import Users, Roles
-
-
-user_datastore = SQLAlchemyUserDatastore(
-    database.db, Users, Roles)
 
 
 def create_app():
@@ -26,12 +19,12 @@ def create_app():
 
     ma.init_app(app)
 
+    security.init_app(app, datastore=auth.user_datastore)
+
     admin.init_app(app)
 
     app.register_blueprint(app_blueprint)
     app.register_blueprint(api_bp)
-
-    security.init_app(app, datastore=user_datastore)
 
     # app.cli.add_command(create_db)
     # app.cli.add_command(create_user)
@@ -42,9 +35,7 @@ def create_app():
 app = create_app()
 
 
-# define 404 and 405 error handlers for /api specific routes wich shuold only retrun json
-
-
+# define 404 and 405 error handlers for /api specific routes.
 @app.errorhandler(404)
 @app.errorhandler(405)
 def _handle_api_error(ex):
