@@ -1,6 +1,5 @@
 
 from flask import Flask, request, jsonify
-
 from database import database
 from apps.admin import admin
 from apps.auth import auth
@@ -36,6 +35,8 @@ app = create_app()
 
 
 # define 404 and 405 error handlers for /api specific routes.
+
+
 @app.errorhandler(404)
 @app.errorhandler(405)
 def _handle_api_error(ex):

@@ -22,14 +22,11 @@ class SecureModelView(ModelView):
 
 class UserModelView(SecureModelView):
 
-    column_editable_list = ('active',)
+    #column_editable_list = ('active',)
     column_exclude_list = ['password', "date_modified"]
+    column_list = ['email', 'date_created', 'active', 'roles']
 
 
 class SensorModelView(ModelView):
 
-    column_choices = {
-        'sensor_category': [('Temperature', 'Humidity'), ]
-    }
-
-    column_exclude_list = ['password', "date_created"]
+    column_exclude_list = ["date_modified"]
