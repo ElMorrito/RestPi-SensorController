@@ -10,9 +10,9 @@ markdown = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-admin = "*"
-flask-security = "*"
 email-validator = "*"
 bcrypt = "*"
+flask-login = "*"
 
 [dev-packages]
 autopep8 = "*"

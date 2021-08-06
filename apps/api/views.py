@@ -25,7 +25,7 @@ def index():
 
 
 device_json = {
-    "name": "Restpi raspberry",
+    "name": "RestPi",
     "location": "Main Store A456",
     "station": "DUS",
     "ipv4_address": get_local_ip_address(),
