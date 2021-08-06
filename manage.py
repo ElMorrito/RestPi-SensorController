@@ -39,7 +39,6 @@ def create_app():
 
 app = create_app()
 
-
 # define 404 and 405 error handlers for /api specific routes.
 
 

@@ -8,7 +8,7 @@ from apps.api.models import SensorSchema
 
 from apps.utils import get_local_ip_address, get_temperature_data, hostname
 
-api_bp = Blueprint(name='apiV1', import_name=__name__, url_prefix='/api')
+api_bp = Blueprint(name='apiV1', import_name=__name__, url_prefix='/api/v1')
 
 
 @api_bp.app_errorhandler(500)

@@ -3,11 +3,8 @@ from flask import Blueprint, render_template
 
 from apps.utils import hostname, get_local_ip_address
 
-app_template_folder = os.path.join(
-    os.path.dirname(__file__) + '/templates/app')
-
 app_blueprint = Blueprint(
-    name="app", import_name=__name__, template_folder=app_template_folder)
+    name="frontend", import_name=__name__, template_folder='/templates/frontend')
 
 
 @app_blueprint.route('/', methods=['GET', ])
