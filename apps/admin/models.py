@@ -20,11 +20,11 @@ class SecureModelView(ModelView):
     #         return redirect(url_for('security.login'))
 
 
-class UserModelView(SecureModelView):
+class UserModelView(ModelView):
 
     #column_editable_list = ('active',)
     column_exclude_list = ['password', "date_modified"]
-    column_list = ['email', 'date_created', 'active', 'roles']
+    column_list = ['email', 'date_created', 'active']
 
 
 class SensorModelView(ModelView):

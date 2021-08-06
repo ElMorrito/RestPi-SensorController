@@ -1,5 +1,5 @@
-from apps.auth.models import Users
-from apps.app.models import Sensor
+from models import Users
+from models import Sensor
 from apps.admin.models import UserModelView, SensorModelView, SecureModelView
 from database.database import db
 

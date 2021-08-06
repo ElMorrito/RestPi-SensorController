@@ -1,6 +1,6 @@
 from apps.extensions import ma
 
-from apps.app.models import Sensor
+from models import Sensor
 
 
 class SensorSchema(ma.SQLAlchemyAutoSchema):

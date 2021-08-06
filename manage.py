@@ -1,18 +1,18 @@
 
 from flask import Flask, request, jsonify
 from database import database
+from models import Users
 from apps.admin import admin
 from apps.auth import login_manager
-from apps.auth import models
 from apps.extensions import ma
-from apps.app.views import app_blueprint
+from apps.frontend.views import app_blueprint
 from apps.api.views import api_bp
 from apps.auth.views import auth_bp
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return models.Users.query.filter_by(id=user_id)
+    return Users.query.filter_by(id=user_id)
 
 
 def create_app():

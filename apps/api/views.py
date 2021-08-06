@@ -3,7 +3,7 @@ import os
 import random
 from flask import jsonify, Blueprint, request, abort
 
-from apps.app.models import Sensor
+from models import Sensor
 from apps.api.models import SensorSchema
 
 from apps.utils import get_local_ip_address, get_temperature_data, hostname
