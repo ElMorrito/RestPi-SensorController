@@ -2,32 +2,26 @@
 
 Use a Raspberry-Pi as a RestAPI-Webserver to retrieve data from its connected sensors.
 
-## Before first use
-
-
-1. Install image on SD-Card.
-2. Power up the device and Connect rpi and establish a Ethernet connection inside the network.
-3. SSH via Terminal or Power shell and enter password
-
-```shell
-ssh pi@raspberrypi.local
- ```
-
-4.Setup a static IP address.
 
 ## Usage of the API
 
-All Errors will have the form:
+### API errors
+
+
+Response errors will have the form:
 
 ```json
 {
-    "message" : " ' Short error description ': 'A detailed message about the error and possible causes.'"
+    "message" : "Short error description",
+    "detail:": "A detailed message about the error."
 }
 ```
 
 ### Get device status
 
-`GET /api/device`
+Use this route to get information about the SensorController itself.
+
+`GET /api/v1/device`
 
 Responses:
 
@@ -38,9 +32,9 @@ Example:
 
 ```json
 {
-  "name": "Restpi raspberry",
+  "name": "Restpi Controller 1",
   "location": "Main Store A456",
-  "Station": "DUS",
+  "station": "DUS",
   "ipv4_address": "192.168.0.1",
   "hostname": "raspberry",
 }
@@ -48,9 +42,9 @@ Example:
 
 ### Modify Device Info
 
-`PATCH /api/device`
+`PATCH /api/v1/device`
 
-Allowed values:
+Values:
 
 * `string`: station
 * `string`: location
@@ -66,20 +60,21 @@ Responses:
 
 ### Retrieve Sensor data
 
-`GET /api/sensors/{id:int}`
+`GET /api/v1/sensors/{id:int}`
 
 Example:
 
 ```JSON
 {
-  "id": "int -> representing the unique Id of a sensor",
-  "internal_id": "string -> id give by the manufacturer",
-  "name": "strin -> meaningful name for the Sensor",
-  "type": "string -> representing the device type",
-  "description": "string -> optional",
+  "id": "int(representing the unique Id of a sensor)",
+  "internal_id": "string(id give by the manufacturer)",
+  "name": "string(meaningful name for the Sensor)",
+  "type": "string(representing the device type)",
+  "description": "string(optional description)",
+  "status": "string(information of Sensor Status. Default is OK)",
   "data": {
-      "value": "Sensor specific data e.g. temprature",
-      "unit": "Unit of the value e.g. Degrees C"
+      "value": "float(Sensor specific data e.g. temperature. 2 digits)",
+      "unit": "string(Unit of the value e.g. Degrees C)"
       }
 }
 ```
@@ -91,7 +86,7 @@ Responses:
 
 #### Retrieve a list of connected Sensors
 
-`GET /api/sensors`
+`GET /api/v1/sensors`
 
 Responses:
 
