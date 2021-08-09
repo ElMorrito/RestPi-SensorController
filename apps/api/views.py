@@ -18,27 +18,33 @@ def bad_api_reguest(error):
     message, detail = str(error).split(":")
     print(message)
     print(detail)
+
     return jsonify(message=message, detail=detail), error.code
 
 
 @api_bp.route("/docs")
 def index():
+    """Route for API documentation
+
+    This Route provides a simple documantation about how to use the api,
+    by rendering the README.md file to HTML.
+    """
     with open(os.path.dirname(api_bp.root_path) + '/README.md', 'r') as markdown_file:
         content = markdown_file.read()
         return markdown.markdown(content)
 
 
-device_json = {
-    "name": "RestPi",
-    "location": "Main Store A456",
-    "station": "DUS",
-    "ipv4_address": get_local_ip_address(),
-    "hostname": hostname,
-}
-
-
 @api_bp.route('/device', methods=['GET', 'PATCH'])
 def device_info():
+
+    device_json = {
+        "name": "RestPi",
+        "location": "Main Store A456",
+        "station": "DUS",
+        "ipv4_address": get_local_ip_address(),
+        "hostname": hostname,
+    }
+
     if request.method == 'GET':
         try:
             return jsonify(device_json), 200
