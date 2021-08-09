@@ -1,6 +1,6 @@
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
-from flask import redirect, url_for
+from flask import redirect, url_for, request
 
 
 class SecureModelView(ModelView):
@@ -15,16 +15,19 @@ class SecureModelView(ModelView):
     def is_accessible(self):
         return (current_user.is_active and current_user.is_authenticated)
 
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('auth.login', next=request.url))
     # def _handle_view(self, name, **kwargs):
     #     if not self.is_accessible():
     #         return redirect(url_for('security.login'))
 
 
-class UserModelView(ModelView):
+class UserModelView(SecureModelView):
 
     #column_editable_list = ('active',)
     column_exclude_list = ['password', "date_modified"]
-    column_list = ['email', 'date_created', 'active']
+    column_list = ['email', 'date_created', 'is_active']
 
 
 class SensorModelView(ModelView):

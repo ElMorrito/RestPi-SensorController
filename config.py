@@ -1,7 +1,5 @@
 import os
 
-from flask.app import Flask
-
 
 class Config(object):
     DEBUG = False

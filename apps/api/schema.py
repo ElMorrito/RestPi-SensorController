@@ -1,9 +1,9 @@
 from apps.extensions import ma
 
-from models import Sensor
+from models import Sensors
 
 
 class SensorSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Sensor
+        model = Sensors
         exclude = ('date_created', 'date_modified', 'id')
