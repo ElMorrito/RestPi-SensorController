@@ -3,7 +3,7 @@ import os
 import random
 from flask import jsonify, Blueprint, request, abort
 
-from models import Sensor
+from models import Sensors
 from apps.api.schema import SensorSchema
 from apps.utils import get_local_ip_address, get_temperature_data, hostname
 
@@ -67,7 +67,7 @@ def device_info():
 @api_bp.get('/sensors')
 def sensor_list():
 
-    sensors = Sensor.query.all()
+    sensors = Sensors.query.all()
 
     if not sensors:
         return jsonify({'message': 'No sensors in list'}), 204
