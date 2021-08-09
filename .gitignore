@@ -133,4 +133,3 @@ dmypy.json
 
 #ignore sqllite databases
 *.db
-*.sqlite3
