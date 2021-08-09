@@ -12,7 +12,7 @@ from apps.auth.views import auth_bp
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.filter_by(id=user_id)
+    return Users.query.filter_by(id=user_id).first()
 
 
 def create_app():
@@ -26,6 +26,7 @@ def create_app():
     ma.init_app(app)
 
     admin.init_app(app)
+
     login_manager.init_app(app)
 
     app.register_blueprint(app_blueprint)
