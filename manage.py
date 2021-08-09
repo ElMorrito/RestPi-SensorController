@@ -46,7 +46,8 @@ app = create_app()
 @app.errorhandler(405)
 def _handle_api_error(ex):
     if request.path.startswith('/api/'):
-        return jsonify(message=str(ex)), ex.code
+        message, detail = str(ex).split(": ")
+        return jsonify(message=message, detail=detail), ex.code
     else:
         return ex
 

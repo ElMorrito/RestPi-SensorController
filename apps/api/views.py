@@ -4,9 +4,9 @@ import random
 from flask import jsonify, Blueprint, request, abort
 
 from models import Sensor
-from apps.api.models import SensorSchema
-
+from apps.api.schema import SensorSchema
 from apps.utils import get_local_ip_address, get_temperature_data, hostname
+
 
 api_bp = Blueprint(name='apiV1', import_name=__name__, url_prefix='/api/v1')
 
@@ -14,7 +14,11 @@ api_bp = Blueprint(name='apiV1', import_name=__name__, url_prefix='/api/v1')
 @api_bp.app_errorhandler(500)
 @api_bp.app_errorhandler(400)
 def bad_api_reguest(error):
-    return jsonify(message=str(error)), error.code
+
+    message, detail = str(error).split(":")
+    print(message)
+    print(detail)
+    return jsonify(message=message, detail=detail), error.code
 
 
 @api_bp.route("/docs")

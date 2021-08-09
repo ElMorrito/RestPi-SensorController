@@ -11,8 +11,8 @@ flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 flask-admin = "*"
 email-validator = "*"
-bcrypt = "*"
 flask-login = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 autopep8 = "*"
