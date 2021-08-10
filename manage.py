@@ -4,8 +4,7 @@ from database import database
 from models import Users
 from apps.admin import admin
 from apps.auth import login_manager
-from apps.extensions import ma
-from apps.frontend.views import app_blueprint
+from apps.api import api
 from apps.api.views import api_bp
 from apps.auth.views import auth_bp
 
@@ -22,14 +21,10 @@ def create_app():
     app.config.from_object('config.DevelopmentConfig')
 
     database.init_app(app)
-
-    ma.init_app(app)
-
+    api.init_app(app)
     admin.init_app(app)
-
     login_manager.init_app(app)
 
-    app.register_blueprint(app_blueprint)
     app.register_blueprint(api_bp)
     app.register_blueprint(auth_bp)
     # app.cli.add_command(create_db)

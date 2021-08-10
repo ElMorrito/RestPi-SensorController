@@ -12,11 +12,6 @@ class Config(object):
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # flask_security config
-    SECURITY_REGISTERABLE = True
-
-    SECURITY_PASSWORD_SALT = 'saltyasfuck'
-
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -32,5 +27,3 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
     SQLALCHEMY_DATABASE_URI = "sqlite:///development_database.db"
-
-    SECURITY_SEND_REGISTER_EMAIL = False
