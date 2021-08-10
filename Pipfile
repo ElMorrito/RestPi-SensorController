@@ -13,6 +13,7 @@ flask-admin = "*"
 email-validator = "*"
 flask-login = "*"
 flask-sqlalchemy = "*"
+flask-wtf = "*"
 
 [dev-packages]
 autopep8 = "*"
