@@ -3,15 +3,12 @@ from flask import Flask, request, jsonify
 from database import database
 from models import Users
 from apps.admin import admin
-from apps.auth import login_manager
+from apps.auth import auth
 from apps.api import api
 from apps.api.views import api_bp
-from apps.auth.views import auth_bp
+#from apps.auth.views import auth_bp
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    return Users.query.filter_by(id=user_id).first()
+#login_manager = auth.login_manager
 
 
 def create_app():
@@ -23,10 +20,10 @@ def create_app():
     database.init_app(app)
     api.init_app(app)
     admin.init_app(app)
-    login_manager.init_app(app)
+    auth.init_app(app)
 
     app.register_blueprint(api_bp)
-    app.register_blueprint(auth_bp)
+    # app.register_blueprint(auth_bp)
     # app.cli.add_command(create_db)
     # app.cli.add_command(create_user)
 
