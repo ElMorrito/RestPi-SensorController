@@ -1,14 +1,13 @@
 import markdown
-import os
-import random
 from flask import jsonify, Blueprint, request, abort
+
 
 from models import Sensors
 from apps.api.schema import SensorSchema
 from apps.utils import get_local_ip_address, get_temperature_data, hostname
+from pathlib import Path
 
-
-api_bp = Blueprint(name='apiV1', import_name=__name__, url_prefix='/api/v1')
+api_bp = Blueprint(name='api', import_name=__name__, url_prefix='/api/v1')
 
 
 @api_bp.app_errorhandler(500)
@@ -27,9 +26,12 @@ def index():
     """Route for API documentation
 
     This Route provides a simple documantation about how to use the api,
-    by rendering the README.md file to HTML.
+    by rendering the README.md
+     file to HTML.
     """
-    with open(os.path.dirname(api_bp.root_path) + '/README.md', 'r') as markdown_file:
+    base_path = Path().absolute()
+
+    with open(base_path / 'README.md', 'r') as markdown_file:
         content = markdown_file.read()
         return markdown.markdown(content)
 
@@ -68,15 +70,14 @@ def device_info():
 def sensor_list():
 
     sensors = Sensors.query.all()
+    sensors_json = SensorSchema().dump(sensors, many=True)
 
     if not sensors:
-        return jsonify({'message': 'No sensors in list'}), 204
-
-    sensors_json = SensorSchema().dump(sensors, many=True)
+        return jsonify(sensors_json), 204
 
     # add data to the sensors
     for s in sensors_json:
         s['data'] = get_temperature_data()
-        s['status_code'] = 'OK'
+        s['status_code'] = "OK"
 
     return jsonify(sensors_json), 200
