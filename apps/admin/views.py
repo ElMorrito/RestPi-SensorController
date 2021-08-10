@@ -1,4 +1,5 @@
 from flask_admin.contrib.sqla import ModelView
+from flask_admin.base import AdminIndexView
 from flask_login import current_user
 from flask import redirect, url_for, request
 
@@ -8,7 +9,6 @@ class SecureModelView(ModelView):
     """Base Class for protected views.
 
     Classes that derive from this class will only be accessible by authenticted users
-
     """
     # attributes added to secure /admin url paths
 
