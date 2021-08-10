@@ -10,6 +10,7 @@ admin_views = [
     UserModelView(Users, db.session),
     SensorModelView(Sensors, db.session, name='Sensors')
 ]
+
 admin = Admin(name="Restpi-Admin", template_mode='bootstrap4')
 
 
