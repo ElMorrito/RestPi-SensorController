@@ -1,4 +1,4 @@
-from apps.extensions import ma
+from apps.api.api import ma
 
 from models import Sensors
 
