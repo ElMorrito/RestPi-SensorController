@@ -10,6 +10,9 @@ class SecureModelView(ModelView):
 
     Classes that derive from this class will only be accessible by authenticted users
     """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
     # attributes added to secure /admin url paths
 
     def is_accessible(self):
@@ -26,8 +29,7 @@ class SecureModelView(ModelView):
 class UserModelView(SecureModelView):
 
     #column_editable_list = ('active',)
-    column_exclude_list = ['password', "date_modified"]
-    column_list = ['email', 'date_created', 'is_active']
+    column_list = ["email", "date_created", "is_active", "password"]
 
 
 class SensorModelView(ModelView):
