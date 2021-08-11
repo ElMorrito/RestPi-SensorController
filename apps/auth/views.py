@@ -1,28 +1,34 @@
-from flask import Blueprint, render_template, request, redirect, url_for, abort
-from flask_login import login_user
-from models import Users
+from flask import Blueprint, render_template, request, redirect, url_for, abort, flash
+from flask_login import login_user, logout_user
+from models import User
+from apps.auth.forms import LoginForm
+
 auth_bp = Blueprint('auth', __name__, template_folder='templates/auth')
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-
     error = None
+    form = LoginForm()
 
-    if request.method == 'POST':
+    if form.validate_on_submit():
 
-        username = request.form['username']
-        password = request.form['password']
+        username = form.username.data
+        password = form.password.data
 
-        user = Users.query.filter_by(
-            email=username).first()
-        if not user:
-            error = "User does not exixts"
-            return render_template('login.html', error=error)
+        user = User.query.filter_by(email=username).first()
+        # Check is user exists or password is not correct.
+        if user is None or not user.check_password(password):
+            flash("invalid credentials", category="error")
 
-        if user.check_password(password):
-            login_user(user=user)
+        if login_user(user):
+            return redirect(url_for("admin.index"))
+        return render_template("login.html", form=form)
 
-        return redirect(url_for('admin.index'))
+    return render_template("login.html", form=form)
 
-    return render_template('login.html', error=error)
+
+@auth_bp.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("admin.index"))
