@@ -13,7 +13,7 @@ class BaseModel(db.Model):
         db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
 
-class Users(BaseModel, UserMixin):
+class User(BaseModel, UserMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
     is_active = db.Column(db.Boolean())
@@ -26,8 +26,11 @@ class Users(BaseModel, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
 
-class Sensors(BaseModel):
+
+class Sensor(BaseModel):
     name = db.Column(db.String(255), default="", unique=True)
     sensor_id = db.Column(db.String(255), default="",
                           nullable=False, unique=True)

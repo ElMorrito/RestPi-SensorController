@@ -1,8 +1,6 @@
 import markdown
 from flask import jsonify, Blueprint, request, abort
-
-
-from models import Sensors
+from models import Sensor
 from apps.api.schema import SensorSchema
 from apps.utils import get_local_ip_address, get_temperature_data, hostname
 from pathlib import Path
@@ -69,11 +67,11 @@ def device_info():
 @api_bp.get('/sensors')
 def sensor_list():
 
-    sensors = Sensors.query.all()
+    sensors = Sensor.query.all()
     sensors_json = SensorSchema().dump(sensors, many=True)
 
     if not sensors:
-        return jsonify(sensors_json), 204
+        return jsonify(sensors_json), 200
 
     # add data to the sensors
     for s in sensors_json:
