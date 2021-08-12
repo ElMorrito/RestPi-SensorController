@@ -6,13 +6,14 @@ from apps.admin import admin
 from apps.auth import auth
 from apps.api import api
 from apps.api.views import api_bp
+from config import DevelopmentConfig
 
 
-def create_app():
+def create_app(config):
 
     app = Flask(__name__)
 
-    app.config.from_object('config.DevelopmentConfig')
+    app.config.from_object(config)
 
     database.init_app(app)
 
@@ -30,7 +31,7 @@ def create_app():
     return app
 
 
-app = create_app()
+app = create_app(DevelopmentConfig)
 
 
 # as long no main route is defined redirect to admin.index view

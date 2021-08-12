@@ -1,4 +1,5 @@
 import os
+import tempfile
 
 
 class Config(object):
@@ -12,9 +13,12 @@ class Config(object):
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    ADMIN_USERNAME = "Admin"
+
+    ADMIN_PASSWORD = "admin"
+
 
 class ProductionConfig(Config):
-    DEBUG = False
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
@@ -32,6 +36,11 @@ class DevelopmentConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = "sqlite:///development_database.db"
 
-    ADMIN_USERNAME = "Admin"
 
-    ADMIN_PASSWORD = "admin"
+class TestConfig(Config):
+
+    DEBUG = True
+
+    TESTING = True
+
+    SQLALCHEMY_DATABASE_URI = "sqlite:///test_database.db"
