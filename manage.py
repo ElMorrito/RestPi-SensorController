@@ -35,11 +35,17 @@ app = create_app()
 
 @app.before_first_request
 def create_admin():
+    admin_username = app.config.get('ADMIN_USERNAME')
+    admin_password = app.config.get('ADMIN_PASSWORD')
 
-    if User.query.filter_by(email='admin').first() is None:
-        admin = User(email="admin", password="admin")
+    if admin_password is None or admin_username is None:
+        raise Exception("No admin user defined")
+
+    if User.query.filter_by(email=admin_username).first() is None:
+        admin = User(email=admin_username, password=admin_password)
         database.db.session.add(admin)
         database.db.session.commit()
+
 
 # define 404 and 405 error handlers for /api specific routes.
 
