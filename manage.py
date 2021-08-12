@@ -1,5 +1,5 @@
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect, url_for
 from database import database
 from models import User
 from apps.admin import admin
@@ -31,6 +31,12 @@ def create_app():
 
 
 app = create_app()
+
+
+# as long no main route is defined redirect to admin.index view
+@app.get("/")
+def handle_main_route():
+    return redirect(url_for("admin.index"))
 
 
 @app.before_first_request
